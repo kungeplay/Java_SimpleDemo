@@ -17,6 +17,9 @@
         <module>CsvRead_UpdateDB</module>
         <module>Amq_Producer</module>
         <module>Amq_Consumer</module>
+        <module>HessianService_Interface</module>
+        <module>HessianService_Implment</module>
+        <module>HessianClient</module>
     </modules>
 
     <properties>
@@ -194,6 +197,13 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.caucho</groupId>
+                <artifactId>hessian</artifactId>
+                <version>4.0.7</version>
             </dependency>
 
 

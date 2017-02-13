@@ -32,11 +32,12 @@ public class AmqProducerTopic {
             //创建接收或发送的线程实例(创建session的时候定义是否要启用事务，且事务类型是AUTO_ACKNOWLEDGE也就是消费者成功在Listen中获得消息返回时,会话自动确定用户收到消息)
             session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
             //创建队列(返回一个消息目的地)
-            destination = session.createTopic("HelloTopic4");
+            destination = session.createTopic("FirstTop");
             //创建消息发布者
             MessageProducer messageProducer = session.createProducer(destination);
-            // messageProducer.setDeliveryMode(DeliveryMode.PERSISTENT);//设置持久
-            sendMessage(session,messageProducer,destination);
+            //设置不持久化，此处学习，实际根据项目决定,默认PERSISTENT
+            messageProducer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+            sendMessage(session,messageProducer);
         } catch (JMSException e) {
             e.printStackTrace();
         }finally {
@@ -50,13 +51,14 @@ public class AmqProducerTopic {
         }
     }
 
-    public static void sendMessage(Session session, MessageProducer messageProducer,Destination destination) throws JMSException {
+    public static void sendMessage(Session session, MessageProducer messageProducer) throws JMSException {
         for (int i = 0; i < SENDNUM; i++) {
             //创建一条文本消息
             TextMessage message = session.createTextMessage("ActiveMQ 发布者订阅模型发送消息" + i);
             System.out.println("发送消息：amq发送消息" + i);
             //通过消息生产者发出消息
-            messageProducer.send(destination,message);
+            messageProducer.send(message);
+            session.commit();//注意如果session是以开启事务的方式创建必须session.commit()才能提交消息到服务器队列，session.close()服务器将收不到消息
             try {
                 TimeUnit.SECONDS.sleep(2);
             } catch (InterruptedException e) {

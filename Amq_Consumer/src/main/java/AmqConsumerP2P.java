@@ -15,7 +15,7 @@ public class AmqConsumerP2P {
     public static void main(String[] args) {
         ConnectionFactory connectionFactory;//连接工厂
         Connection connection = null;//连接
-        Session session;//会话，接受或者发送消息的线程
+        Session session = null;//会话，接受或者发送消息的线程
         Destination destination;//消息的目的地
         MessageConsumer messageConsumer;//消息的消费者
 
@@ -28,13 +28,13 @@ public class AmqConsumerP2P {
             // 启动连接
             connection.start();
             // 创建session，Session是我们操作消息的接口。可以通过session创建生产者、消费者、消息等。Session提供了事务的功能。
-            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);//注意如果session以开启事务方式,则接收消息后必须调用session.commit方法.
             // 创建一个连接Hello World!的消息队列
             destination = session.createQueue("Hello World!");
             // 创建消息消费者
             messageConsumer = session.createConsumer(destination);
             while (true) {
-                TextMessage textMessage = (TextMessage) messageConsumer.receive(100000);
+                TextMessage textMessage = (TextMessage) messageConsumer.receive(100000);//接收消息阻塞时间100秒
                 if (textMessage != null) {
                     System.out.println("收到的消息:" + textMessage.getText());
                 } else {
@@ -44,8 +44,18 @@ public class AmqConsumerP2P {
 
         } catch (JMSException e) {
             e.printStackTrace();
+        } finally {
+            if (session != null) {
+                try {
+                    session.close();
+                } catch (JMSException e) {
+                }
+            }
+            try {
+                connection.close();
+            } catch (JMSException e) {
+            }
         }
-
 
 
     }

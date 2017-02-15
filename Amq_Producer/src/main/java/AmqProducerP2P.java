@@ -2,6 +2,7 @@ import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Amq消息发送端,点对点(P2P)模式
@@ -42,7 +43,7 @@ public class AmqProducerP2P {
             //发送消息
             sendMessage(session,messageProducer);
 
-            session.commit();
+
 
         } catch (JMSException e) {
             e.printStackTrace();
@@ -65,6 +66,12 @@ public class AmqProducerP2P {
             System.out.println("发送消息：amq发送消息" + i);
             //通过消息生产者发出消息
             messageProducer.send(message);
+            session.commit();//
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

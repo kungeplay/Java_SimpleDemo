@@ -39,6 +39,8 @@ public class AmqConsumerTopic {
             MessageConsumer messageConsumer = session.createConsumer(topic);
 
             //消息发布者添加监听器
+            //接收和处理消息的方法有两种，分为同步和异步的，一般同步的方式我们是通过MessageConsumer.receive()方法来处理接收到的消息。
+            //而异步的方法则是通过注册一个MessageListener的方法，使用MessageConsumer.setMessageListener()。
             messageConsumer.setMessageListener(new TopicListener("订阅者1"));
         } catch (JMSException e) {
             e.printStackTrace();

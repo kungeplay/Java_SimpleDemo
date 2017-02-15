@@ -34,6 +34,7 @@ public class AmqConsumerP2P {
             // 创建消息消费者
             messageConsumer = session.createConsumer(destination);
             while (true) {
+                //同步接收消息
                 TextMessage textMessage = (TextMessage) messageConsumer.receive(100000);//接收消息阻塞时间100秒
                 if (textMessage != null) {
                     System.out.println("收到的消息:" + textMessage.getText());

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--配置JMS连接工厂-->
+    <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="failover:(tcp://localhost:61616)"/>
+    </bean>
+
+    <!--接收消息的两种方式-->
+
+    <!--第一种：-->
+    <!--定义消息队列(Queue)-->
+    <bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
+        <!--设置消息队列的名字-->
+        <constructor-arg value="queue1"/>
+    </bean>
+    <!--配置JMS模板(Queue),Spring提供的JMS工具类，它发送，接收消息-->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="defaultDestination" ref="queueDestination"/>
+        <property name="receiveTimeout" value="100000"/>
+    </bean>
+
+    <!--queue消息消费者 -->
+    <bean id="consumerService" class="xuzhu.impl.ConsumerServiceImpl">
+        <property name="jmsTemplate" ref="jmsTemplate"/>
+    </bean>
+
+    <!--第二种，Spring JMS提供了消息监听的模式：-->
+    <!--定义消息队列(Queue),监听一个队列queue2-->
+    <bean id="queueDestination2" class="org.apache.activemq.command.ActiveMQQueue">
+        <!--消息队列名字-->
+        <constructor-arg value="queue2"/>
+    </bean>
+    <!--配置消息队列监听者(Queue)-->
+    <bean class="xuzhu.impl.QueueMessageListener" id="queueMessageListener"/>
+    <!--消息监听容器(Queue),配置连接工厂，监听队列及监听器-->
+    <bean class="org.springframework.jms.listener.DefaultMessageListenerContainer" id="jmsContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="queueDestination2"/>
+        <property name="messageListener" ref="queueMessageListener"/>
+    </bean>
+
+
+    <!--主题（Topic）和队列消息的主要差异体现在JmsTemplate中"pubSubDomain"是否设置为True。如果为True，则是Topic；如果是false或者默认，则是queue。-->
+    <!--定义消息主题(Topic)-->
+    <bean id="topicDestination" class="org.apache.activemq.command.ActiveMQTopic"><!--只有这一块与队列不同-->
+        <constructor-arg value="xuzhu_topic"/>
+    </bean>
+    <!--消息主题监听者和主题监听容器 可以配置多个，即多个订阅者-->
+    <!--消息主题监听者(Topic)-->
+    <bean id="topicMessageListener" class="xuzhu.TopicMessageListener"/>
+    <!--主题监听容器(Topic)-->
+    <bean id="topicJmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="topicDestination"/>
+        <property name="messageListener" ref="topicMessageListener"/>
+    </bean>
+
+</beans>

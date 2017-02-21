@@ -20,6 +20,8 @@
         <module>HessianService_Interface</module>
         <module>HessianService_Implment</module>
         <module>HessianClient</module>
+        <module>Amq_Consumer_Spring</module>
+        <module>Amq_Producer_Spring</module>
     </modules>
 
     <properties>
@@ -206,6 +208,18 @@
                 <version>4.0.7</version>
             </dependency>
 
+
+
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-all</artifactId>
+                <version>5.14.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jms</artifactId>
+                <version>4.1.4.RELEASE</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

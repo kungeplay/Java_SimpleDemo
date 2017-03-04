@@ -5,7 +5,7 @@
 
     <!--配置JMS连接工厂-->
     <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-        <property name="brokerURL" value="failover:(tcp://localhost:61616)"/>
+        <property name="brokerURL" value="failover:(tcp://localhost:61616,tcp://localhost:61617,tcp://localhost:61618,tcp://localhost:61619)?randomize=false"/>
     </bean>
     <!--定义消息队列(Queue)-->
     <bean class="org.apache.activemq.command.ActiveMQQueue" id="queueDestination">

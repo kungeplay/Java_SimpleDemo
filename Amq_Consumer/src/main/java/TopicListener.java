@@ -15,6 +15,7 @@ public class TopicListener implements MessageListener {
 
     public void onMessage(Message message) {
         try {
+            System.out.println(name+"接收到消息类型:"+message.getJMSType());
             TextMessage textMessage = (TextMessage) message;
             System.out.println(name + "接收到消息:" + textMessage.getText());
         } catch (JMSException e) {

@@ -20,8 +20,13 @@ public class TestDubboConsumer {
                 new String[]{"application.xml"});
         context.start();
         DubboService dubboService = (DubboService) context.getBean("dubboService");
-        System.out.println(dubboService.getName());
-
+        final long start = System.currentTimeMillis();
+        try {
+            System.out.println(dubboService.getName());
+        }catch (Throwable e){
+            System.out.println("one timeout:"+(System.currentTimeMillis()-start));
+            e.printStackTrace();
+        }
         Map<String, Object> attachments = Maps.newHashMap();
         attachments.put("hobbies", new String[]{"篮球", "足球", "网球"});
         attachments.put("duties", Sets.newHashSet("打扫卫生", "擦黑板"));
@@ -29,8 +34,14 @@ public class TestDubboConsumer {
 
         Worker worker=new Worker("刘洋",38);
         worker.setAttachments(attachments);
-        String s = dubboService.getDescribe(worker);
-        System.out.println(s);
+        long start2=System.currentTimeMillis();
+        try {
+            String s = dubboService.getDescribe(worker);
+            System.out.println(s);
+        }catch (Throwable e){
+            System.out.println("two timeout:"+(System.currentTimeMillis()-start2));
+            e.printStackTrace();
+        }
         try {
             System.in.read();
         } catch (IOException e) {

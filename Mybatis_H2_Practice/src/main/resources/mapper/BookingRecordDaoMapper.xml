@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<!--采购分销系统优化需求监控booking量-->
+<mapper namespace="com.jiakun.fresh.dao.BookingRecordDao">
+    <insert id="saveBookingResult">
+        INSERT INTO `booking_record`(`depcode`,`arrcode`,`pcc`,`gds_type`,`booking_result`,`record_time`)
+        VALUES (#{depcode},#{arrcode},#{pcc},
+        #{gds_type},#{booking_result},#{record_time});
+    </insert>
+
+    <delete id="deleteBookingResultByTime" parameterType="String" >
+        DELETE FROM booking_record WHERE `record_time`  &lt;=#{record_time};
+    </delete>
+
+    <select id="queryBookingResult" resultMap="bookingRecordInfoMap">
+        SELECT
+        `depcode`,
+        `arrcode`,
+        `pcc`,
+
+        `gds_type`,
+        count(`id`)                         AS 'booking_num',
+        sum(if(`booking_result` = 1, 1, 0)) AS 'success_num'
+        FROM `booking_record`
+        WHERE `record_time` BETWEEN #{begin_time} AND #{end_time}
+        GROUP BY `depcode`, `arrcode`, `pcc`, `gds_type`;
+    </select>
+
+
+    <resultMap id="bookingRecordInfoMap" type="com.jiakun.fresh.pojo.BookingRecordInfo">
+        <result column="depcode" property="depCode"/>
+        <result column="arrcode" property="arrCode"/>
+        <result column="pcc" property="pcc"/>
+        <result column="gds_type" property="gdsType"/>
+        <result column="booking_num" property="bookingNum"/>
+        <result column="success_num" property="successNum"/>
+    </resultMap>
+
+</mapper>

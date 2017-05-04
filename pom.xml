@@ -26,6 +26,7 @@
         <module>Netty_Client</module>
         <module>Guava_Cache</module>
         <module>Redis_Practice</module>
+        <module>Mybatis_H2_Practice</module>
     </modules>
 
     <properties>
@@ -47,6 +48,12 @@
         <activemq-all.version>5.14.3</activemq-all.version>
         <spring-jms.version>4.1.4.RELEASE</spring-jms.version>
         <jedis.version>2.9.0</jedis.version>
+        <h2.version>1.4.191</h2.version>
+        <mybatis.version>3.2.7</mybatis.version>
+        <commons-dbcp.version>1.4</commons-dbcp.version>
+        <mybatis-spring.version>1.2.3</mybatis-spring.version>
+        <mysql-connector-java.version>5.1.18</mysql-connector-java.version>
+        <druid.version>1.0.15</druid.version>
     </properties>
 
     <dependencyManagement>
@@ -124,7 +131,11 @@
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>${mybatis-spring.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>junit</groupId>
@@ -242,6 +253,35 @@
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>
                 <version>${jedis.version}</version>
+            </dependency>
+            <!-- http://mvnrepository.com/artifact/com.h2database/h2 -->
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <!-- http://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
+            <dependency>
+                <groupId>commons-dbcp</groupId>
+                <artifactId>commons-dbcp</artifactId>
+                <version>${commons-dbcp.version}</version>
+            </dependency>
+
+            <!-- http://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector-java.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
             </dependency>
 
         </dependencies>

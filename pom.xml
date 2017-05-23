@@ -27,6 +27,7 @@
         <module>Guava_Cache</module>
         <module>Redis_Practice</module>
         <module>Mybatis_H2_Practice</module>
+        <module>XmlParse</module>
     </modules>
 
     <properties>
@@ -195,6 +196,19 @@
                 <artifactId>jackson-annotations</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
+            <!-- http://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-xml</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <!--you usually also want to make sure that XML library in use is Woodstox since it is not only faster than Stax implementation JDK provides-->
+            <dependency>
+                <groupId>org.codehaus.woodstox</groupId>
+                <artifactId>woodstox-core-asl</artifactId>
+                <version>4.4.1</version>
+            </dependency>
+
             <dependency>
                 <groupId>commons-logging</groupId>
                 <artifactId>commons-logging</artifactId>

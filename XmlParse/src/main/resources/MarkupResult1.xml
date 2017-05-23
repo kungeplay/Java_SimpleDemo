@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<MarkupResult xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <LastUpdated>0001-01-01T00:00:00</LastUpdated>
+    <ExchangeRates>
+        <ExchangeRate>
+            <From>HKD</From>
+            <To>CNY</To>
+            <Rate>0.8880</Rate>
+        </ExchangeRate>
+    </ExchangeRates>
+    <MarkupItems>
+        <MarkupItem>
+            <MarkupBy>Unkown</MarkupBy>
+            <Id>1</Id>
+            <MarkupDescription>Markup not found</MarkupDescription>
+            <MarkupValue>0</MarkupValue>
+            <MarkupId>0</MarkupId>
+        </MarkupItem>
+        <MarkupItem>
+            <MarkupBy>Unkown</MarkupBy>
+            <Id>2</Id>
+            <MarkupDescription>Markup not found</MarkupDescription>
+            <MarkupValue>0</MarkupValue>
+            <MarkupId>0</MarkupId>
+        </MarkupItem>
+    </MarkupItems>
+    <Success>true</Success>
+</MarkupResult>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<MarkupResult xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <LastUpdated>0001-01-01T00:00:00</LastUpdated>
+    <ExchangeRates>
+        <ExchangeRate>
+            <From>HKD</From>
+            <To>CNY</To>
+            <Rate>0.8250</Rate>
+        </ExchangeRate>
+    </ExchangeRates>
+    <MarkupItems>
+        <MarkupItem>
+            <MarkupBy>Rate</MarkupBy>
+            <Id>1</Id>
+            <MarkupDescription>CN OTA 1 - CZ (GDS/Published fare) Ex -Korea,Vietnam,United Arab EMI(DXB) to all destinations
+            </MarkupDescription>
+            <MarkupValue>-0.50</MarkupValue>
+            <MarkupModes>
+                <MarkupMode>
+                    <Rank>1</Rank>
+                    <MarkupBy>Amount</MarkupBy>
+                    <MarkupValue>-90.00</MarkupValue>
+                </MarkupMode>
+                <MarkupMode>
+                    <Rank>2</Rank>
+                    <MarkupBy>Rate</MarkupBy>
+                    <MarkupValue>1.00</MarkupValue>
+                </MarkupMode>
+            </MarkupModes>
+        </MarkupItem>
+    </MarkupItems>
+    <Success>true</Success>
+</MarkupResult>

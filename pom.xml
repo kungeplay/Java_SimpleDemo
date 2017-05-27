@@ -28,6 +28,7 @@
         <module>Redis_Practice</module>
         <module>Mybatis_H2_Practice</module>
         <module>XmlParse</module>
+        <module>SpringAspect</module>
     </modules>
 
     <properties>
@@ -55,6 +56,7 @@
         <mybatis-spring.version>1.2.3</mybatis-spring.version>
         <mysql-connector-java.version>5.1.18</mysql-connector-java.version>
         <druid.version>1.0.15</druid.version>
+        <org.aspectj.version>1.8.9</org.aspectj.version>
     </properties>
 
     <dependencyManagement>
@@ -249,7 +251,11 @@
                 <version>${netty-all.version}</version>
             </dependency>
 
-
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${org.aspectj.version}</version>
+            </dependency>
 
 
             <dependency>

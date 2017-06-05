@@ -29,6 +29,7 @@
         <module>Mybatis_H2_Practice</module>
         <module>XmlParse</module>
         <module>SpringAspect</module>
+        <module>AnnotationPractice</module>
     </modules>
 
     <properties>

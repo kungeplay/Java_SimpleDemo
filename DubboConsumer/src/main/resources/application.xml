@@ -6,7 +6,7 @@
     <!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
     <dubbo:application name="simple_Consumer"/>
     <!-- 使用multicast广播注册中心暴露发现服务地址 -->
-    <dubbo:registry protocol="zookeeper" address="zookeeper://127.0.0.1:2181" group="test"/>
+    <dubbo:registry id="zookeeperService" protocol="zookeeper" address="zookeeper://127.0.0.1:2181" group="test"/>
     <!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
     <dubbo:reference interface="com.xuzhu.service.DubboService" id="dubboService">
         <!--<dubbo:parameter key="loadbalance" value="leastactive"/>&lt;!&ndash;负载均衡策略,值参见dubbo的jar包中的META-INF/dubbo/internal/com.alibaba.dubbo.rpc.cluster.LoadBalance文件&ndash;&gt;-->
@@ -15,5 +15,17 @@
         <dubbo:parameter key="hash.nodes" value="20"/>
         <dubbo:parameter key="timeout" value="300"/>
         <dubbo:parameter key="version" value="0.0.1"/>
+        <dubbo:parameter key="registry" value="zookeeperService"/>
+    </dubbo:reference>
+
+    <!--异步回调方式 参考 http://dubbo.io/User+Guide-zh.htm#UserGuide-zh-%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8-->
+    <dubbo:reference interface="com.xuzhu.service.DubboAsyncService" id="dubboAsyncService">
+        <dubbo:parameter key="cluster" value="failover"/>
+        <dubbo:parameter key="retries" value="1"/>
+        <dubbo:parameter key="hash.nodes" value="20"/>
+        <dubbo:parameter key="timeout" value="1000"/> <!--超时时间，单位毫秒,回调受此控制，但使用async表示异步后provider可以超时-->
+        <dubbo:parameter key="version" value="0.0.1"/>
+        <dubbo:parameter key="registry" value="zookeeperService"/>
+        <dubbo:parameter key="async" value="true"/><!--注意，表示调用是否马上返回-->
     </dubbo:reference>
 </beans>

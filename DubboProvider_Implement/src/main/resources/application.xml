@@ -7,7 +7,7 @@
     <!--提供方应用信息，用于计算依赖关系-->
     <dubbo:application name="provider" logger="slf4j" owner="jiakun.liu,liujiakun" organization="xuzhu"/>
     <!--使用zookeeper注册中心暴露服务地址,注意address中的协议要与dubbo-admin服务中的dubbo.properties中的协议一致-->
-    <dubbo:registry address="zookeeper://127.0.0.1:2181" protocol="zookeeper" group="test"/>
+    <dubbo:registry id="zookeeperService" address="zookeeper://127.0.0.1:2181" protocol="zookeeper" group="test"/>
     <!--用dubbo协议在20880端口暴露服务-->
     <!--可以运行多个Demo Provider和Demo Consumer，来验证软负载均衡，Demo Consumer可以直接启动多个实例，而多个Demo Provider因有端口冲突，可在不同机器上运行，或者修改Demo Provider-->
     <dubbo:protocol name="dubbo" port="20880"/>
@@ -16,5 +16,26 @@
                    loadbalance="consistenthash"
                    ref="testService"
                    timeout="5000"
-                   version="0.0.1"/>
+                   version="0.0.1"
+                   registry="zookeeperService"
+    />
+    
+    
+    <!--异步回调 参考http://dubbo.io/User+Guide-zh.htm#UserGuide-zh-%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8 -->
+    <bean id="testAsyncService" class="com.jiakun.service.DubboAsyncServiceImpl" />
+    <dubbo:service interface="com.xuzhu.service.DubboAsyncService"
+                   loadbalance="consistenthash"
+                   ref="testAsyncService"
+                   version="0.0.1"
+                   callbacks="1000"
+                   connections="1"
+                   timeout="20"
+                   registry="zookeeperService"><!--connections: 限制客户端服务使用连接连接数,缺省值100; callbacks:The callback instance limit peer connection-->
+        <dubbo:method name="doProcess"><!--需要在Spring的配置文件中声明哪个参数是callback类型-->
+            <dubbo:argument index="1" callback="true"/><!--索引从0开始-->
+            <!--也可以通过指定类型的方式-->
+            <!--<dubbo:argument type="com.xuzhu.model.Callback" callback="true"/>-->
+        </dubbo:method>
+    </dubbo:service>
+
 </beans>

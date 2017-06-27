@@ -31,7 +31,7 @@
                    connections="1"
                    timeout="20"
                    registry="zookeeperService"><!--connections: 限制客户端服务使用连接连接数,缺省值100; callbacks:The callback instance limit peer connection-->
-        <dubbo:method name="doProcess"><!--需要在Spring的配置文件中声明哪个参数是callback类型-->
+        <dubbo:method name="doProcess" async="true"><!--需要在Spring的配置文件中声明哪个参数是callback类型-->
             <dubbo:argument index="1" callback="true"/><!--索引从0开始-->
             <!--也可以通过指定类型的方式-->
             <!--<dubbo:argument type="com.xuzhu.model.Callback" callback="true"/>-->

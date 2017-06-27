@@ -28,7 +28,7 @@ public class TestDubboAsyncConsumer {
         dubboAsyncService.doProcess("123", new CallbackImpl());
         System.out.println("同步调用结果:"+dubboService.getName());
         try {
-            TimeUnit.SECONDS.sleep(10);
+            TimeUnit.SECONDS.sleep(3);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

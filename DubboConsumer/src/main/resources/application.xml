@@ -26,6 +26,10 @@
         <dubbo:parameter key="timeout" value="1000"/> <!--超时时间，单位毫秒,回调受此控制，但使用async表示异步后provider可以超时-->
         <dubbo:parameter key="version" value="0.0.1"/>
         <dubbo:parameter key="registry" value="zookeeperService"/>
-        <dubbo:parameter key="async" value="true"/><!--注意，表示调用是否马上返回-->
+        <dubbo:method name="doProcess" async="true"><!--需要在Spring的配置文件中声明哪个参数是callback类型,async表示调用是否马上返回-->
+            <dubbo:argument index="1" callback="true"/><!--索引从0开始-->
+            <!--也可以通过指定类型的方式-->
+            <!--<dubbo:argument type="com.xuzhu.model.Callback" callback="true"/>-->
+        </dubbo:method>
     </dubbo:reference>
 </beans>

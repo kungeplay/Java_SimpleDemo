@@ -9,6 +9,8 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 
 import java.util.Date;
 
@@ -23,14 +25,15 @@ public class TimeServer1 {
 
     public void bind(int port) throws InterruptedException {
         //配置服务端的NIO线程组
-        EventLoopGroup bossGroup = new NioEventLoopGroup();
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        EventLoopGroup bossGroup = new NioEventLoopGroup();//指定mainReactor,专门用于接收客户端连接
+        EventLoopGroup workerGroup = new NioEventLoopGroup();//指定subReactor,用于处理IO事件
         try {
             ServerBootstrap bootstrap=new ServerBootstrap();
             bootstrap.group(bossGroup,workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .option(ChannelOption.SO_BACKLOG,1024)
-                    .childHandler(new ChildChannelHandler1());
+                    .handler(new LoggingHandler(LogLevel.INFO))//handler()用于指定mainReactor的处理器，只是默认情况下mainReactor中已经添加了acceptor处理器
+                    .childHandler(new ChildChannelHandler1());//childHandler用于指定subReactor中的处理器
             //绑定端口,同步等待成功
             ChannelFuture f = bootstrap.bind(port).sync();
             //等待服务端监控端口关闭

@@ -15,13 +15,14 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 public class TimeServer {
     public void bind(int port)throws Exception{
         //配置服务器端的NIO线程组
-        EventLoopGroup bossGroup = new NioEventLoopGroup();
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        EventLoopGroup bossGroup = new NioEventLoopGroup();//指定mainReactor,专门用于接收客户端连接
+        EventLoopGroup workerGroup = new NioEventLoopGroup();//指定subReactor,用于处理IO事件
         try {
             ServerBootstrap b=new ServerBootstrap();
             b.group(bossGroup,workerGroup)
                     .channel(NioServerSocketChannel.class)
-                    .option(ChannelOption.SO_BACKLOG,1024)
+                    .option(ChannelOption.SO_BACKLOG,1024)//设置TCP参数
+                    //childHandler用于指定subReactor中的处理器
                     .childHandler(new ChildChannelHandler());
             //绑定端口，同步等待成功
             ChannelFuture f=b.bind(port).sync();

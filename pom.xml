@@ -32,6 +32,9 @@
         <module>AnnotationPractice</module>
         <module>Protostuff_Practice</module>
         <module>DubboDynamicConsumer</module>
+        <module>Hibernate_Practice</module>
+        <module>Hibernate2_Practice</module>
+        <module>ZooKeeper_Practice</module>
     </modules>
 
     <properties>

@@ -34,7 +34,7 @@
         <module>DubboDynamicConsumer</module>
         <module>Hibernate_Practice</module>
         <module>Hibernate2_Practice</module>
-        <module>ZooKeeper_Practice</module>
+        <module>Zookeeper_Practice</module>
     </modules>
 
     <properties>
@@ -329,6 +329,16 @@
                 <artifactId>objenesis</artifactId>
                 <version>2.1</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper -->
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>3.4.5</version>
+            </dependency>
+
+
+
 
         </dependencies>
     </dependencyManagement>
